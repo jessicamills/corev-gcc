@@ -3251,7 +3251,6 @@ riscv_expand_block_move (rtx dest, rtx src, rtx length)
 	    = RISCV_MAX_MOVE_BYTES_PER_LOOP_ITER / UNITS_PER_WORD;
 	  unsigned iter_words = min_iter_words;
 	  HOST_WIDE_INT bytes = INTVAL (length), words = bytes / UNITS_PER_WORD;
-
 	  /* Lengthen the loop body if it shortens the tail.  */
 	  for (unsigned i = min_iter_words; i < min_iter_words * 2 - 1; i++)
 	    {
