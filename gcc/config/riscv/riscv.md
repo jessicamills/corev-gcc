@@ -69,6 +69,7 @@
   ;; Stack Smash Protector
   UNSPEC_SSP_SET
   UNSPEC_SSP_TEST
+
 ])
 
 (define_constants
@@ -2608,3 +2609,4 @@
 (include "pic.md")
 (include "generic.md")
 (include "sifive-7.md")
+(include "corev.md")

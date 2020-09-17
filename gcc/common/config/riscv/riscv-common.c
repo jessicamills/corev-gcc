@@ -57,6 +57,9 @@ struct riscv_implied_info_t
 riscv_implied_info_t riscv_implied_info[] =
 {
   {"d", "f"},
+  {"xcorev", "xcorevalu"},
+  {"xcorev", "xcorevhwlp"},
+  {"xcorev", "xcorevmac"},
   {NULL, NULL}
 };
 
@@ -507,16 +510,84 @@ riscv_subset_list::parse_multiletter_ext (const char *p,
       while (*++q != '\0' && *q != '_' && !ISDIGIT (*q))
 	;
 
-      end_of_version
-	= parsing_subset_version (q, &major_version, &minor_version,
-				  /* default_major_version= */ 2,
-				  /* default_minor_version= */ 0,
-				  /* std_ext_p= */ FALSE,
-				  &explicit_version_p);
+      if (strncmp (subset, "xcorev", 6) == 0)
+	{
+	  /* Min length for a non-generic CORE-V ext */
+	  bool non_gen_cv = (strlen(subset) >= 9);
 
-      *q = '\0';
+	  if ((strncmp (subset, "xcorevalu", 9) == 0) && non_gen_cv)
+	    {           
+	      end_of_version
+	      = parsing_subset_version (q, &major_version, &minor_version,
+					/* default_major_version= */ 1,
+					/* default_minor_version= */ 0,
+					/* std_ext_p= */ FALSE,
+					&explicit_version_p);
+	      *q = '\0';
 
-      add (subset, major_version, minor_version, explicit_version_p);
+	      //FIXME: Remove lookup
+	      if (!lookup ("xcorevalu", major_version, minor_version))
+		add ("xcorevalu", major_version, minor_version, explicit_version_p);
+	    }
+	  else if ((strncmp (subset, "xcorevhwlp", 10) == 0) && non_gen_cv)
+	    { 
+	      end_of_version
+	      = parsing_subset_version (q, &major_version, &minor_version,
+					/* default_major_version= */ 1,
+					/* default_minor_version= */ 0,
+					/* std_ext_p= */ FALSE,
+					&explicit_version_p);
+	      *q = '\0';
+
+	      //FIXME: Remove lookup
+	      if (!lookup ("xcorevhwlp", major_version, minor_version))
+		add ("xcorevhwlp", major_version, minor_version, explicit_version_p);
+	    }
+	  else if ((strncmp (subset, "xcorevmac", 9) == 0) && non_gen_cv)
+	    { 
+	      end_of_version
+	      = parsing_subset_version (q, &major_version, &minor_version,
+					/* default_major_version= */ 1,
+					/* default_minor_version= */ 0,
+					/* std_ext_p= */ FALSE,
+					&explicit_version_p);
+	      *q = '\0';
+
+	      //FIXME: Remove lookup
+	      if (!lookup ("xcorevmac", major_version, minor_version))
+		add ("xcorevmac", major_version, minor_version, explicit_version_p);
+	    }
+	  else
+	    {
+	      end_of_version
+	      = parsing_subset_version (q, &major_version, &minor_version,
+					/* default_major_version= */ 1,
+					/* default_minor_version= */ 0,
+					/* std_ext_p= */ FALSE,
+					&explicit_version_p);
+	      *q = '\0';
+
+	      //FIXME: Remove lookup
+	      if (!lookup ("xcorev", major_version, minor_version))
+		add ("xcorev", major_version, minor_version, explicit_version_p);
+
+	      handle_implied_ext ("xcorev", major_version, minor_version, explicit_version_p);
+	  }
+	}
+      else 
+	{
+	  end_of_version
+	  = parsing_subset_version (q, &major_version, &minor_version,
+				    /* default_major_version= */ 2,
+				    /* default_minor_version= */ 0,
+				    /* std_ext_p= */ FALSE,
+				    &explicit_version_p);
+
+	  *q = '\0';
+
+	  add (subset, major_version, minor_version, explicit_version_p);
+        }
+
       free (subset);
       p += end_of_version - subset;
 
@@ -646,6 +717,26 @@ riscv_parse_arch_string (const char *isa, int *flags, location_t loc)
   *flags &= ~MASK_RVC;
   if (subset_list->lookup ("c"))
     *flags |= MASK_RVC;
+
+  *flags &= ~MASK_COREV_HWLP;
+  if (subset_list->lookup ("xcorevhwlp"))
+    *flags |= MASK_COREV_HWLP;
+
+  *flags &= ~MASK_COREV_MAC;
+  if (subset_list->lookup ("xcorevmac"))
+    *flags |= MASK_COREV_MAC;
+
+  *flags &= ~MASK_COREV_ALU;
+  if (subset_list->lookup ("xcorevalu"))
+    *flags |= MASK_COREV_ALU;
+
+  //TODO: Remove
+  /* Generic CORE-V includes all other extensions */
+  if (subset_list->lookup ("xcorev")){
+    *flags |= MASK_COREV_HWLP;
+    *flags |= MASK_COREV_MAC;
+    *flags |= MASK_COREV_ALU;
+  }
 
   if (current_subset_list)
     delete current_subset_list;
