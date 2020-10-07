@@ -3240,8 +3240,7 @@ riscv_expand_block_move (rtx dest, rtx src, rtx length)
       emit_insn(gen_hwlp_memcpy(dest_reg, src_reg, temp_reg, length));
       return true;
     }
-/* TODO:REMOVE TWO COMMENT OUTS
-  if (CONST_INT_P (length))
+  else if (CONST_INT_P (length))
     {
       HOST_WIDE_INT factor, align;
 
@@ -3263,9 +3262,9 @@ riscv_expand_block_move (rtx dest, rtx src, rtx length)
 	    = RISCV_MAX_MOVE_BYTES_PER_LOOP_ITER / UNITS_PER_WORD;
 	  unsigned iter_words = min_iter_words;
 	  HOST_WIDE_INT bytes = INTVAL (length), words = bytes / UNITS_PER_WORD;
-*/
+
 	  /* Lengthen the loop body if it shortens the tail.  */
-/*	  for (unsigned i = min_iter_words; i < min_iter_words * 2 - 1; i++)
+	  for (unsigned i = min_iter_words; i < min_iter_words * 2 - 1; i++)
 	    {
 	      unsigned cur_cost = iter_words + words % iter_words;
 	      unsigned new_cost = i + words % i;
@@ -3276,7 +3275,7 @@ riscv_expand_block_move (rtx dest, rtx src, rtx length)
 	  riscv_block_move_loop (dest, src, bytes, iter_words * UNITS_PER_WORD);
 	  return true;
 	}
-    }*/
+    }
   return false;
 }
 
