@@ -30,7 +30,6 @@
   UNSPECV_CV_SETUP
   UNSPECV_CV_SETUPI
   UNSPECV_HWLP_MEMCPY
-
 ])
 
 ;;
@@ -39,7 +38,6 @@
 ;;      CORE-V HWLP INSN
 ;;
 ;;  ....................
-;; gcc -enable-corev-loop
 
 ;;TODO: choose this or the other one
 
