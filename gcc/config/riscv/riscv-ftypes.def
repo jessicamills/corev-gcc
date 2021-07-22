@@ -26,6 +26,8 @@ along with GCC; see the file COPYING3.  If not see
       LIST contains the return-type code followed by the codes for each
         argument type.  */
 
+/* TODO REMOVE THESE THAT ARENT USED */
+
 DEF_RISCV_FTYPE (0, (USI))
 
 DEF_RISCV_FTYPE (1, (VOID, USI))
@@ -40,5 +42,6 @@ DEF_RISCV_FTYPE (3, (INT, SHORT, SHORT, SHORT))
 
 DEF_RISCV_FTYPE (4, (INT, INT, SHORT, SHORT, SHORT))
 DEF_RISCV_FTYPE (4, (INT, INT, INT, INT, SHORT))
+DEF_RISCV_FTYPE (4, (INT, INT, INT, INT, INT))
 
 DEF_RISCV_FTYPE (5, (INT, INT, SHORT, SHORT, SHORT, SHORT))

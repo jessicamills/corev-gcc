@@ -60,8 +60,8 @@
 
 (define_insn "cv_muls"
   [(set (match_operand:SI 0 "register_operand" "=r")
-    (mult: SI (sign_extend:SI (match_operand:HI 1 "register_operand" "r"))
-	      (sign_extend:SI (match_operand:HI 2 "register_operand" "r"))
+    (mult: SI (sign_extend:SI (match_operand:SI 1 "register_operand" "r"));;TO DO INCORRECT NEED CHANGING
+	      (sign_extend:SI (match_operand:SI 2 "register_operand" "r"))
     )
   )]
   "TARGET_COREV_MAC"
@@ -89,8 +89,8 @@
 (define_insn "cv_mulsn"
   [(set (match_operand:SI 0 "register_operand" "=r")
     (lshiftrt:SI
-      (mult:SI (sign_extend:SI (match_operand:HI 1 "register_operand" "r"))
-	       (sign_extend:SI (match_operand:HI 2 "register_operand" "r"))
+      (mult:SI (sign_extend:SI (match_operand:SI 1 "register_operand" "r"));;TO DO INCORRECT NEED CHANGING
+	       (sign_extend:SI (match_operand:SI 2 "register_operand" "r"))
       )
       (match_operand:SI 3 "immediate_operand" "i")
     )
@@ -124,8 +124,8 @@
   [(set (match_operand:SI 0 "register_operand" "=r")
     (lshiftrt:SI
       (plus:SI
-	(mult:SI (sign_extend:SI (match_operand:HI 1 "register_operand" "r"))
-		 (sign_extend:SI (match_operand:HI 2 "register_operand" "r"))
+	(mult:SI (sign_extend:SI (match_operand:SI 1 "register_operand" "r")) ;;FIX THIS AS ABOVE
+		 (sign_extend:SI (match_operand:SI 2 "register_operand" "r"))
 	)
 	(ashift:SI
 	  (const_int 1)
@@ -170,8 +170,8 @@
 
 (define_insn "cv_mulu"
   [(set (match_operand:SI 0 "register_operand" "=r")
-    (mult: SI (zero_extend:SI (match_operand:HI 1 "register_operand" "r"))
-	      (zero_extend:SI (match_operand:HI 2 "register_operand" "r"))
+    (mult: SI (zero_extend:SI (match_operand:SI 1 "register_operand" "r"));;TO DO INCORRECT NEED CHANGING
+	      (zero_extend:SI (match_operand:SI 2 "register_operand" "r"))
     )
   )]
   "TARGET_COREV_MAC"
@@ -197,8 +197,8 @@
 (define_insn "cv_mulun"
   [(set (match_operand:SI 0 "register_operand" "=r")
     (lshiftrt:SI
-      (mult:SI (zero_extend:SI (match_operand:HI 1 "register_operand" "r"))
-	       (zero_extend:SI (match_operand:HI 2 "register_operand" "r"))
+      (mult:SI (zero_extend:SI (match_operand:SI 1 "register_operand" "r"));;TO DO INCORRECT NEED CHANGING
+	       (zero_extend:SI (match_operand:SI 2 "register_operand" "r"))
       )
       (match_operand:SI 3 "immediate_operand" "i")
     )
@@ -230,8 +230,8 @@
   [(set (match_operand:SI 0 "register_operand" "=r")
     (lshiftrt:SI
       (plus:SI
-	(mult:SI (zero_extend:SI (match_operand:HI 1 "register_operand" "r"))
-		 (zero_extend:SI (match_operand:HI 2 "register_operand" "r"))
+	(mult:SI (zero_extend:SI (match_operand:SI 1 "register_operand" "r"));;TO DO INCORRECT NEED CHANGING
+		 (zero_extend:SI (match_operand:SI 2 "register_operand" "r"))
 	)
 	(ashift:SI
 	  (const_int 1)
@@ -278,8 +278,8 @@
   [(set (match_operand:SI 0 "register_operand" "=r")
     (ashiftrt:SI
       (plus:SI
-	(mult:SI (sign_extend:SI (match_operand:HI 2 "register_operand" "r"))
-		 (sign_extend:SI (match_operand:HI 3 "register_operand" "r"))
+	(mult:SI (sign_extend:SI (match_operand:SI 2 "register_operand" "r"));;TO DO INCORRECT NEED CHANGING
+		 (sign_extend:SI (match_operand:SI 3 "register_operand" "r"))
 	)
 	(match_operand:SI 1 "register_operand" "0")
       )
@@ -317,8 +317,8 @@
     (ashiftrt:SI
       (plus:SI
 	(plus:SI
-	  (mult:SI (sign_extend:SI (match_operand:HI 2 "register_operand" "r"))
-		   (sign_extend:SI (match_operand:HI 3 "register_operand" "r"))
+	  (mult:SI (sign_extend:SI (match_operand:SI 2 "register_operand" "r"));;TO DO INCORRECT NEED CHANGING
+		   (sign_extend:SI (match_operand:SI 3 "register_operand" "r"))
 	  )
 	  (match_operand:SI 1 "register_operand" "0")
 	)
@@ -370,8 +370,8 @@
   [(set (match_operand:SI 0 "register_operand" "=r")
     (lshiftrt:SI
       (plus:SI
-	(mult:SI (zero_extend:SI (match_operand:HI 2 "register_operand" "r"))
-		 (zero_extend:SI (match_operand:HI 3 "register_operand" "r"))
+	(mult:SI (zero_extend:SI (match_operand:SI 2 "register_operand" "r"));;TO DO INCORRECT NEED CHANGING
+		 (zero_extend:SI (match_operand:SI 3 "register_operand" "r"))
 	)
 	(match_operand:SI 1 "register_operand" "0")
       )
@@ -388,12 +388,12 @@
   [(set (match_operand:SI 0 "register_operand" "=r")
     (lshiftrt:SI
       (plus:SI
-	(mult:SI (lshiftrt:SI (match_operand:SI 1 "register_operand" "r")
+	(mult:SI (lshiftrt:SI (match_operand:SI 2 "register_operand" "r")
 			      (const_int 16))
-		 (lshiftrt:SI (match_operand:SI 2 "register_operand" "r")
+		 (lshiftrt:SI (match_operand:SI 3 "register_operand" "r")
 			      (const_int 16))
 	)
-	(match_operand:SI 3 "register_operand" "0")
+	(match_operand:SI 1 "register_operand" "0")
       )
       (match_operand:SI 4 "immediate_operand" "i")
     )
@@ -409,8 +409,8 @@
     (lshiftrt:SI
       (plus:SI
 	(plus:SI
-	  (mult:SI (zero_extend:SI (match_operand:HI 2 "register_operand" "r"))
-		   (zero_extend:SI (match_operand:HI 3 "register_operand" "r"))
+	  (mult:SI (zero_extend:SI (match_operand:SI 2 "register_operand" "r"));;TO DO INCORRECT NEED CHANGING
+		   (zero_extend:SI (match_operand:SI 3 "register_operand" "r"))
 	  )
 	  (match_operand:SI 1 "register_operand" "0")
 	)
